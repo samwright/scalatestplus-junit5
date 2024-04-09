@@ -5,7 +5,7 @@ name := "junit-5.10"
 
 organization := "org.scalatestplus"
 
-version := "3.2.18.0"
+version := "3.2.18.0-kognic1"
 
 homepage := Some(url("https://github.com/scalatest/scalatestplus-junit"))
 
@@ -110,10 +110,12 @@ OsgiKeys.additionalHeaders:= Map(
   "Bundle-Vendor" -> "Artima, Inc."
 )
 
-publishTo := {
-  val nexus = "https://oss.sonatype.org/"
-  Some("publish-releases" at nexus + "service/local/staging/deploy/maven2")
-}
+publishTo := Some("kognic-artifacts" at "artifactregistry://europe-west1-maven.pkg.dev/annotell-com/maven-default")
+
+//publishTo := {
+//  val nexus = "https://oss.sonatype.org/"
+//  Some("publish-releases" at nexus + "service/local/staging/deploy/maven2")
+//}
 
 publishMavenStyle := true
 
@@ -131,10 +133,8 @@ pomExtra := (
   </scm>
 )
 
-credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
-
 // Temporary disable publishing of doc in dotty, can't get it to build.
-Compile / packageDoc / publishArtifact := !scalaBinaryVersion.value.startsWith("3")
+Compile / packageDoc / publishArtifact := false
 
 def docTask(docDir: File, resDir: File, projectName: String): File = {
   val docLibDir = docDir / "lib"
